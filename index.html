@@ -16,51 +16,63 @@
 
   <script type="text/javascript">
       
-    var computerChoices = 'abcdefghijklmnopqrstuvwxyz'.split('');
-
     
     var wins = 0;
     var losses = 0;
     var guessesLeft = 11;
     var yourGuesses = [] ;
-   
+
+    var computerChoices = 'abcdefghijklmnopqrstuvwxyz'.split('');
+
+  
+    var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)]
+    
+      
+     
     document.onkeyup = function(event) {
 
-      
+         
       var userGuess = event.key;
 
-      // Chooses computer letter at random from array
-      var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-
+      // writes to array to track guesses
       
+      yourGuesses.push(userGuess);
 
-      // need to remove if around rps
-      // need to code yourGuesses to write to array
-      // need to code stop at 0 for guessesLeft
-      // need to code losses only go up one when guessesLeft = 0
-      // need to code computerGuess to only choose new letter when won or loss
-
-      if ((userGuess === "r") || (userGuess === "p") || (userGuess === "s")) {
-
+    
+      // logic to determine score
         if (userGuess === computerGuess)  {
           wins++;
+          guessesLeft = 11;
+          yourGuesses = [];
+          computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)]; 
+
         } else  {
           guessesLeft--;
-        }
+        };
+        
+        if (guessesLeft === 0) {
+          losses ++;
+          guessesLeft = 11;
+          yourGuesses = [];
+          computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+        }; 
 
-        // Creating a variable to hold our new HTML. Our HTML now keeps track of the user and computer guesses, and wins/losses/ties.
+
+        
+
+        // html variable
         var html =
           "<p>You chose: " + userGuess + "</p>" +
-          "<p>The computer chose: " + computerGuess + "</p>" +
+          // "<p>The computer chose: " + computerGuess + "</p>" +
           "<p>Wins: " + wins + "</p>" +
           "<p>Losses: " + losses + "</p>" +
           "<p>Guesses Left: " + guessesLeft + "</p>" +
           "<p>Your Guesses: " + yourGuesses + "</p>" ;
 
-        // Set the inner HTML contents of the #game div to our html string
+        
         document.querySelector("#game").innerHTML = html;
       }
-    };
+   
   </script>
 
 </body>
